@@ -318,7 +318,7 @@ send_message(message) {
 
           var message_user = document.createElement('p')
           message_user.setAttribute('class', 'message_user')
-          message_user.textContent = `${name} - ${time}`; // Display name and time
+          message_user.textContent = `${name} at ${time}`; // Display name and time
 
           var message_content_container = document.createElement('div')
           message_content_container.setAttribute('class', 'message_content_container')
