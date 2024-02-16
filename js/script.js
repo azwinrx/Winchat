@@ -205,32 +205,46 @@ window.onload = function() {
       // Save name to localStorage
       localStorage.setItem('name', name)
     }
-    // Sends message/saves the message to firebase database
-    send_message(message){
-      var parent = this
-      // if the local storage name is null and there is no message
-      // then return/don't send the message. The user is somehow hacking
-      // to send messages. Or they just deleted the
-      // localstorage themselves. But hacking sounds cooler!!
-      if(parent.get_name() == null && message == null){
-        return
-      }
+    
 
-      // Get the firebase database value
-      db.ref('chats/').once('value', function(message_object) {
-        // This index is mortant. It will help organize the chat in order
-        var index = parseFloat(message_object.numChildren()) + 1
-        db.ref('chats/' + `message_${index}`).set({
-          name: parent.get_name(),
-          message: message,
-          index: index
-        })
-        .then(function(){
-          // After we send the chat refresh to get the new messages
-          parent.refresh_chat()
-        })
+    
+    // Sends message/saves the message to firebase database
+send_message(message) {
+  var parent = this;
+  // if the local storage name is null and there is no message
+  // then return/don't send the message. The user is somehow hacking
+  // to send messages. Or they just deleted the
+  // localstorage themselves. But hacking sounds cooler!!
+  if (parent.get_name() == null && message == null) {
+    return;
+  }
+  // Function to get current time
+  function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+
+  // Get the firebase database value
+  db.ref('chats/').once('value', function (message_object) {
+    // This index is mortant. It will help organize the chat in order
+    var index = parseFloat(message_object.numChildren()) + 1;
+    db.ref('chats/' + `message_${index}`).set({
+      name: parent.get_name(),
+      message: message,
+      time: getCurrentTime(), // Add current time
+      index: index
+    })
+      .then(function () {
+        // After we send the chat refresh to get the new messages
+        parent.refresh_chat();
       })
-    }
+  });
+}
+
+
     // Get name. Gets the username from localStorage
     get_name(){
       // Get the name from localstorage
@@ -290,6 +304,8 @@ window.onload = function() {
         ordered.forEach(function(data) {
           var name = data.name
           var message = data.message
+          var time = data.time; // Get the time
+
 
           var message_container = document.createElement('div')
           message_container.setAttribute('class', 'message_container')
@@ -302,7 +318,7 @@ window.onload = function() {
 
           var message_user = document.createElement('p')
           message_user.setAttribute('class', 'message_user')
-          message_user.textContent = `${name}`
+          message_user.textContent = `${name} - ${time}`; // Display name and time
 
           var message_content_container = document.createElement('div')
           message_content_container.setAttribute('class', 'message_content_container')
