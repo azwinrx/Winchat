@@ -309,7 +309,7 @@ body{
 /* mobile */
 @media screen and (max-width : 600px) {
   #chat_content_container{
-    height: 130%;
+    height: 110%;
   }
   
   #join_button{
