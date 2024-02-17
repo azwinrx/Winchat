@@ -16,7 +16,7 @@ window.onload = function() {
   // This is very IMPORTANT!! We're going to use "db" a lot.
   var db = firebase.database()
   // We're going to use oBjEcT OrIeNtEd PrOgRaMmInG. Lol
-  class MEME_CHAT{
+  class winchat{
     // Home() is used to create the home page
     home(){
       // First clear the body before adding in
@@ -40,7 +40,7 @@ window.onload = function() {
 
       var title = document.createElement('h1')
       title.setAttribute('id', 'title')
-      title.textContent = 'WinChat'
+      title.textContent = 'winchat'
       title_inner_container.append(title)
       title_container.append(title_inner_container)
       document.body.append(title_container)
@@ -83,7 +83,7 @@ window.onload = function() {
             // Remove the join_container. So the site doesn't look weird.
             join_container.remove()
             // parent = this. But it is not the join_button
-            // It is (MEME_CHAT = this).
+            // It is (winchat = this).
             parent.create_chat()
           }
         }else{
@@ -341,7 +341,7 @@ send_message(message) {
     }
   }
   // So we've "built" our app. Let's make it work!!
-  var app = new MEME_CHAT()
+  var app = new winchat()
   // If we have a name stored in localStorage.
   // Then use that name. Otherwise , if not.
   // Go to home.
