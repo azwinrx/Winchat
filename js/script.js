@@ -218,6 +218,7 @@ send_message(message) {
   if (parent.get_name() == null && message == null) {
     return;
   }
+
   // Function to get current time
   function getCurrentTime() {
     const now = new Date();
@@ -225,7 +226,6 @@ send_message(message) {
     const minutes = now.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
-
 
   // Get the firebase database value
   db.ref('chats/').once('value', function (message_object) {
