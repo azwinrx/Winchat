@@ -222,9 +222,12 @@ send_message(message) {
   // Function to get current time
   function getCurrentTime() {
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+  const year = now.getFullYear(); // Mendapatkan tahun
+  const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mendapatkan bulan (ditambah 1 karena bulan dimulai dari 0)
+  const date = now.getDate().toString().padStart(2, '0'); // Mendapatkan tanggal
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  return `${date}/${month}/${year} ${hours}:${minutes}`; // Mengembalikan format yang diinginkan
   }
 
   // Get the firebase database value
