@@ -66,7 +66,7 @@ body{
 }
 #join_inner_container{
   width: 50%;
-  height: 100%;
+  height: 50%;
 }
 #join_input_container{
   width: 100%;
@@ -116,7 +116,7 @@ body{
 
 #chat_container{
   width: 100%;
-  height:480px;
+  height:540px;
 
   display: flex;
   justify-content: center;
@@ -138,7 +138,7 @@ body{
 #chat_content_container{
   
   width: 100%;
-  height: 60%;
+  height: 80%;
 
   float: left;
   overflow-y: auto;
@@ -308,11 +308,51 @@ body{
 
 /* mobile */
 @media screen and (max-width : 600px) {
+  
+
+  #chat_container{
+    height: 100%;
+  }
   #chat_content_container{
-    height: 50%;
+    height: 680px;
   }
   
   #join_button{
     width: 60%;
   }
+  #chat_input_container{
+    width: 95%;
+    height: 90%;
+    position:relative; /* Mengubah posisi menjadi fixed */
+    bottom: 0;
+
+  }
+  #chat_logout_container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999; /* Ensure it's above other content */
+    background-color: transparent;
+    padding: 10px 15px; /* Adjust padding as needed */
+    border-top: 1px solid #ccc; /* Add a border to separate from content */
+  }
+
+  /* Adjust chat input and send button width */
+  #chat_input {
+    width: calc(100% - 50px); /* Adjust width based on send button width */
+  }
+
+  #chat_input_send {
+    width: 50px; /* Set fixed width for send button */
+  }
+
+  /* Adjust logout button styles */
+  #chat_logout {
+    width: 100%;
+    height: 40px; /* Adjust height as needed */
+    border-radius: 20px; /* Adjust border radius for button */
+    font-size: 14px; /* Adjust font size */
+  }
+
 }

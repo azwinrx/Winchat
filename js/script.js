@@ -176,6 +176,15 @@ window.onload = function() {
           chat_input_send.classList.remove('enabled')
         }
       }
+            // Mendeteksi perubahan ukuran layar (misalnya, saat keyboard muncul atau menghilang)
+      window.addEventListener('resize', function() {
+        // Menghitung tinggi keyboard
+        var keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+        // Ubah tinggi chat input bar
+        var chatInput = document.getElementById('chat_input');
+        chatInput.style.height = 'calc(100% - ' + keyboardHeight + 'px)';
+      });
 
       var chat_logout_container = document.createElement('div')
       chat_logout_container.setAttribute('id', 'chat_logout_container')
@@ -352,3 +361,15 @@ send_message(message) {
     app.chat()
   }
 }
+
+// Memantau perubahan ukuran layar
+window.addEventListener('resize', function() {
+  const chatContainer = document.getElementById('chat_container');
+  
+  // Jika viewport lebih pendek dari 650px (menandakan keyboard muncul)
+  if (window.innerHeight < 650) {
+    chatContainer.style.height = `${window.innerHeight}px`;
+  } else {
+    chatContainer.style.height = '100vh';
+  }
+});
