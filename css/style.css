@@ -365,7 +365,7 @@ body {
   }
 
   #chat_content_container {
-    height: 100%;
+    height: 640px;
   }
 
   #join_button {
