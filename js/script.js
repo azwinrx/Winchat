@@ -1,6 +1,6 @@
 // We enclose this in window.onload.
 // So we don't have ridiculous errors.
-window.onload = function() {
+window.onload = function () {
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDqiHMN82XqatCBw4iKRcK71Z-vqiJRbdg",
@@ -16,9 +16,9 @@ window.onload = function() {
   // This is very IMPORTANT!! We're going to use "db" a lot.
   var db = firebase.database()
   // We're going to use oBjEcT OrIeNtEd PrOgRaMmInG. Lol
-  class winchat{
+  class winchat {
     // Home() is used to create the home page
-    home(){
+    home() {
       // First clear the body before adding in
       // a title and the join form
       document.body.innerHTML = ''
@@ -26,12 +26,12 @@ window.onload = function() {
       this.create_join_form()
     }
     // chat() is used to create the chat page
-    chat(){
+    chat() {
       this.create_title()
       this.create_chat()
     }
     // create_title() is used to create the title
-    create_title(){
+    create_title() {
       // This is the title creator. 🎉
       var title_container = document.createElement('div')
       title_container.setAttribute('id', 'title_container')
@@ -46,7 +46,7 @@ window.onload = function() {
       document.body.append(title_container)
     }
     // create_join_form() creates the join form
-    create_join_form(){
+    create_join_form() {
       // YOU MUST HAVE (PARENT = THIS). OR NOT. I'M NOT YOUR BOSS!😂
       var parent = this;
 
@@ -70,13 +70,13 @@ window.onload = function() {
       join_input.setAttribute('maxlength', 25)
       join_input.placeholder = 'Masukkan nama anonim-mu'
       // Every time we type into the join_input
-      join_input.onkeyup  = function(){
+      join_input.onkeyup = function () {
         // If the input we have is longer that 0 letters
-        if(join_input.value.length > 0){
+        if (join_input.value.length > 0) {
           // Make the button light up
           join_button.classList.add('enabled')
           // Allow the user to click the button
-          join_button.onclick = function(){
+          join_button.onclick = function () {
             // Save the name to local storage. Passing in
             // the join_input.value
             parent.save_name(join_input.value)
@@ -86,7 +86,7 @@ window.onload = function() {
             // It is (winchat = this).
             parent.create_chat()
           }
-        }else{
+        } else {
           // If the join_input is empty then turn off the
           // join button
           join_button.classList.remove('enabled')
@@ -101,7 +101,7 @@ window.onload = function() {
       document.body.append(join_container)
     }
     // create_load() creates a loading circle that is used in the chat container
-    create_load(container_id){
+    create_load(container_id) {
       // YOU ALSO MUST HAVE (PARENT = THIS). BUT IT'S WHATEVER THO.
       var parent = this;
 
@@ -120,7 +120,7 @@ window.onload = function() {
 
     }
     // create_chat() creates the chat container and stuff
-    create_chat(){
+    create_chat() {
       // Again! You need to have (parent = this)
       var parent = this;
       // GET THAT MEMECHAT HEADER OUTTA HERE
@@ -153,14 +153,14 @@ window.onload = function() {
       chat_input.setAttribute('maxlength', 1000)
       // Get the name of the user
       chat_input.placeholder = `${parent.get_name()}, Katakan sesuatu...`
-      chat_input.onkeyup  = function(){
-        if(chat_input.value.length > 0){
+      chat_input.onkeyup = function () {
+        if (chat_input.value.length > 0) {
           chat_input_send.removeAttribute('disabled')
           chat_input_send.classList.add('enabled')
-          chat_input_send.onclick = function(){
+          chat_input_send.onclick = function () {
             chat_input_send.setAttribute('disabled', true)
             chat_input_send.classList.remove('enabled')
-            if(chat_input.value.length <= 0){
+            if (chat_input.value.length <= 0) {
               return
             }
             // Enable the loading circle in the 'chat_content_container'
@@ -172,12 +172,12 @@ window.onload = function() {
             // Focus on the input just after
             chat_input.focus()
           }
-        }else{
+        } else {
           chat_input_send.classList.remove('enabled')
         }
       }
-            // Mendeteksi perubahan ukuran layar (misalnya, saat keyboard muncul atau menghilang)
-      window.addEventListener('resize', function() {
+      // Mendeteksi perubahan ukuran layar (misalnya, saat keyboard muncul atau menghilang)
+      window.addEventListener('resize', function () {
         // Menghitung tinggi keyboard
         var keyboardHeight = window.innerHeight - window.visualViewport.height;
 
@@ -193,7 +193,7 @@ window.onload = function() {
       chat_logout.setAttribute('id', 'chat_logout')
       chat_logout.textContent = `${parent.get_name()} • logout`
       // "Logout" is really just deleting the name from the localStorage
-      chat_logout.onclick = function(){
+      chat_logout.onclick = function () {
         localStorage.clear()
         // Go back to home page
         parent.home()
@@ -210,73 +210,73 @@ window.onload = function() {
       parent.refresh_chat()
     }
     // Save name. It literally saves the name to localStorage
-    save_name(name){
+    save_name(name) {
       // Save name to localStorage
       localStorage.setItem('name', name)
     }
-    
 
-    
+
+
     // Sends message/saves the message to firebase database
-send_message(message) {
-  var parent = this;
-  // if the local storage name is null and there is no message
-  // then return/don't send the message. The user is somehow hacking
-  // to send messages. Or they just deleted the
-  // localstorage themselves. But hacking sounds cooler!!
-  if (parent.get_name() == null && message == null) {
-    return;
-  }
+    send_message(message) {
+      var parent = this;
+      // if the local storage name is null and there is no message
+      // then return/don't send the message. The user is somehow hacking
+      // to send messages. Or they just deleted the
+      // localstorage themselves. But hacking sounds cooler!!
+      if (parent.get_name() == null && message == null) {
+        return;
+      }
 
-  // Function to get current time
-  function getCurrentTime() {
-    const now = new Date();
-  const year = now.getFullYear(); // Mendapatkan tahun
-  const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mendapatkan bulan (ditambah 1 karena bulan dimulai dari 0)
-  const date = now.getDate().toString().padStart(2, '0'); // Mendapatkan tanggal
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  return `${date}/${month}/${year} ${hours}:${minutes}`; // Mengembalikan format yang diinginkan
-  }
+      // Function to get current time
+      function getCurrentTime() {
+        const now = new Date();
+        const year = now.getFullYear(); // Mendapatkan tahun
+        const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mendapatkan bulan (ditambah 1 karena bulan dimulai dari 0)
+        const date = now.getDate().toString().padStart(2, '0'); // Mendapatkan tanggal
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        return `${date}/${month}/${year} ${hours}:${minutes}`; // Mengembalikan format yang diinginkan
+      }
 
-  // Get the firebase database value
-  db.ref('chats/').once('value', function (message_object) {
-    // This index is mortant. It will help organize the chat in order
-    var index = parseFloat(message_object.numChildren()) + 1;
-    db.ref('chats/' + `message_${index}`).set({
-      name: parent.get_name(),
-      message: message,
-      time: getCurrentTime(), // Add current time
-      index: index
-    })
-      .then(function () {
-        // After we send the chat refresh to get the new messages
-        parent.refresh_chat();
-      })
-  });
-}
+      // Get the firebase database value
+      db.ref('chats/').once('value', function (message_object) {
+        // This index is mortant. It will help organize the chat in order
+        var index = parseFloat(message_object.numChildren()) + 1;
+        db.ref('chats/' + `message_${index}`).set({
+          name: parent.get_name(),
+          message: message,
+          time: getCurrentTime(), // Add current time
+          index: index
+        })
+          .then(function () {
+            // After we send the chat refresh to get the new messages
+            parent.refresh_chat();
+          })
+      });
+    }
 
 
     // Get name. Gets the username from localStorage
-    get_name(){
+    get_name() {
       // Get the name from localstorage
-      if(localStorage.getItem('name') != null){
+      if (localStorage.getItem('name') != null) {
         return localStorage.getItem('name')
-      }else{
+      } else {
         this.home()
         return null
       }
     }
     // Refresh chat gets the message/chat data from firebase
-    refresh_chat(){
+    refresh_chat() {
       var chat_content_container = document.getElementById('chat_content_container')
 
       // Get the chats from firebase
-      db.ref('chats/').on('value', function(messages_object) {
+      db.ref('chats/').on('value', function (messages_object) {
         // When we get the data clear chat_content_container
         chat_content_container.innerHTML = ''
         // if there are no messages in the chat. Retrun . Don't load anything
-        if(messages_object.numChildren() == 0){
+        if (messages_object.numChildren() == 0) {
           return
         }
 
@@ -291,29 +291,29 @@ send_message(message) {
 
         for (var i, i = 0; i < messages.length; i++) {
           // The guide is simply an array from 0 to the messages.length
-          guide.push(i+1)
+          guide.push(i + 1)
           // unordered is the [message, index_of_the_message]
           unordered.push([messages[i], messages[i].index]);
         }
 
         // Now this is straight up from stack overflow 🤣
         // Sort the unordered messages by the guide
-        guide.forEach(function(key) {
+        guide.forEach(function (key) {
           var found = false
-          unordered = unordered.filter(function(item) {
-            if(!found && item[1] == key) {
+          unordered = unordered.filter(function (item) {
+            if (!found && item[1] == key) {
               // Now push the ordered messages to ordered array
               ordered.push(item[0])
               found = true
               return false
-            }else{
+            } else {
               return true
             }
           })
         })
 
         // Now we're done. Simply display the ordered messages
-        ordered.forEach(function(data) {
+        ordered.forEach(function (data) {
           var name = data.name
           var message = data.message
           var time = data.time; // Get the time
@@ -348,7 +348,7 @@ send_message(message) {
         });
         // Go to the recent message at the bottom of the container
         chat_content_container.scrollTop = chat_content_container.scrollHeight;
-    })
+      })
 
     }
   }
@@ -357,7 +357,19 @@ send_message(message) {
   // If we have a name stored in localStorage.
   // Then use that name. Otherwise , if not.
   // Go to home.
-  if(app.get_name() != null){
+  if (app.get_name() != null) {
     app.chat()
   }
 }
+
+// Memantau perubahan ukuran layar
+window.addEventListener('resize', function () {
+  const chatContainer = document.getElementById('chat_container');
+
+  // Jika viewport lebih pendek dari 650px (menandakan keyboard muncul)
+  if (window.innerHeight < 650) {
+    chatContainer.style.height = `${window.innerHeight}px`;
+  } else {
+    chatContainer.style.height = '100vh';
+  }
+});
