@@ -171,7 +171,6 @@ body {
   border-bottom: 2px dashed #1D3354;
   background-color: Transparent;
   padding: 0 15px;
-  border: 2px solid red;
 
 }
 
@@ -376,9 +375,9 @@ body {
   #chat_input_container {
     width: 95%;
     height: auto;
-    /* position: relative; */
+    position: relative;
     /* Mengubah posisi menjadi fixed */
-    /* bottom: 0; */
+    bottom: 0;
 
   }
 
