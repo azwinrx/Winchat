@@ -361,15 +361,3 @@ window.onload = function () {
     app.chat()
   }
 }
-
-// Memantau perubahan ukuran layar
-window.addEventListener('resize', function () {
-  const chatContainer = document.getElementById('chat_container');
-
-  // Jika viewport lebih pendek dari 650px (menandakan keyboard muncul)
-  if (window.innerHeight < 650) {
-    chatContainer.style.height = `${window.innerHeight}px`;
-  } else {
-    chatContainer.style.height = '100vh';
-  }
-});
