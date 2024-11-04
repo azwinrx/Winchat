@@ -153,15 +153,6 @@ window.onload = function () {
       chat_input.setAttribute('maxlength', 1000)
       // Get the name of the user
       chat_input.placeholder = `${parent.get_name()}, Katakan sesuatu...`
-
-      // Fokus pada input segera setelah chat input container dibuat
-      chat_input.focus();
-
-      // Tambahkan event listener pada klik di chat_input untuk memastikan keyboard muncul
-      chat_input.addEventListener('click', function () {
-        chat_input.focus();
-      });
-
       chat_input.onkeyup = function () {
         if (chat_input.value.length > 0) {
           chat_input_send.removeAttribute('disabled')
@@ -382,15 +373,3 @@ window.addEventListener('resize', function () {
     chatContainer.style.height = '100vh';
   }
 });
-
-window.addEventListener('resize', function () {
-  const chatContainer = document.getElementById('chat_container');
-
-  // Jika viewport lebih pendek dari 650px (menandakan keyboard muncul)
-  if (window.innerHeight < 650) {
-    chatContainer.style.height = `${window.innerHeight}px`;
-  } else {
-    chatContainer.style.height = '100vh';
-  }
-});
-
