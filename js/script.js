@@ -377,8 +377,5 @@ window.addEventListener('resize', function () {
   if (window.innerHeight < screen.height) {
     // Keyboard is visible, set chat content container to 40% height
     chatContentContainer.style.height = '40%';
-  } else {
-    // Keyboard is hidden, reset to full height
-    chatContentContainer.style.height = '0';
   }
 });
