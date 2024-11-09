@@ -362,7 +362,15 @@ body {
   }
 
   #chat_content_container {
-    height: 75%;
+  width: 100%;
+  height: 75%;
+
+  float: left;
+  overflow-y: auto;
+  font-family: Varela Round;
+
+  padding-left: 10px;
+  padding-right: 10px;
   }
 
   #join_button {
