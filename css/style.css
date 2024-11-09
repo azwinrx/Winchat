@@ -210,7 +210,6 @@ body {
   justify-content: center;
   align-items: center;
 
-  float: left;
   margin-top: 20px;
 
 }
@@ -381,14 +380,13 @@ body {
 
   #chat_logout_container {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
-    width: 100%;
+    width: 25%;
     /* Ensure it's above other content */
     background-color: transparent;
     padding: 10px 15px;
     /* Adjust padding as needed */
-    border-top: 1px solid #ccc;
     /* Add a border to separate from content */
   }
 
@@ -405,7 +403,13 @@ body {
 
   /* Adjust logout button styles */
   #chat_logout {
-
+    border: 1px solid;
+    text-decoration: none;
+    width: 100%;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #3B4A62;
+    color: rgb(255, 255, 255);
     width: 100%;
     height: 40px;
     /* Adjust height as needed */

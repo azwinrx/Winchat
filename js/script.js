@@ -191,7 +191,7 @@ window.onload = function () {
 
       var chat_logout = document.createElement('button')
       chat_logout.setAttribute('id', 'chat_logout')
-      chat_logout.textContent = `${parent.get_name()} • logout`
+      chat_logout.textContent = ` logout`
       // "Logout" is really just deleting the name from the localStorage
       chat_logout.onclick = function () {
         localStorage.clear()
@@ -199,8 +199,8 @@ window.onload = function () {
         parent.home()
       }
 
-      chat_logout_container.append(chat_logout)
       chat_input_container.append(chat_input, chat_input_send)
+      chat_logout_container.append(chat_logout)
       chat_inner_container.append(chat_content_container, chat_input_container, chat_logout_container)
       chat_container.append(chat_inner_container)
       document.body.append(chat_container)
