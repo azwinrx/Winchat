@@ -364,11 +364,9 @@ window.onload = function () {
 // Mendeteksi perubahan ukuran layar saat keyboard muncul atau hilang
 window.addEventListener('resize', function () {
   var chatInputContainer = document.getElementById('chat_input_container');
-  var chatContentContainer = document.getElementById('chat_content_container');
   // Jika tinggi viewport lebih kecil dari tinggi layar, maka keyboard kemungkinan muncul
   if (window.innerHeight < screen.height) {
     chatInputContainer.style.bottom = '10px'; // Sesuaikan nilai ini agar berada di atas keyboard
-    chatContentContainer.style.height = '40%';
   } else {
     chatInputContainer.style.bottom = '0'; // Kembalikan ke posisi bawah jika keyboard hilang
   }
