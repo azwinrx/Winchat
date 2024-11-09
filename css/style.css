@@ -372,6 +372,7 @@ body {
   #chat_input_container {
     width: 95%;
     height: 35px;
+    margin-left: -20px;
     position: fixed;
     /* Mengubah posisi menjadi fixed */
     bottom: 0;
