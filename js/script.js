@@ -364,7 +364,6 @@ window.onload = function () {
 // Mendeteksi perubahan ukuran layar saat keyboard muncul atau hilang
 window.addEventListener('resize', function () {
   var chatInputContainer = document.getElementById('chat_input_container');
-
   // Jika tinggi viewport lebih kecil dari tinggi layar, maka keyboard kemungkinan muncul
   if (window.innerHeight < screen.height) {
     chatInputContainer.style.bottom = '10px'; // Sesuaikan nilai ini agar berada di atas keyboard
@@ -372,4 +371,14 @@ window.addEventListener('resize', function () {
     chatInputContainer.style.bottom = '0'; // Kembalikan ke posisi bawah jika keyboard hilang
   }
 });
+window.addEventListener('resize', function () {
+  var chatContentContainer = document.getElementById('chat_content_container');
 
+  if (window.innerHeight < screen.height) {
+    // Keyboard is visible, set chat content container to 40% height
+    chatContentContainer.style.height = '40%';
+  } else {
+    // Keyboard is hidden, reset to full height
+    chatContentContainer.style.height = 'calc(100% - ' + chatInputContainer.offsetHeight + 'px)';
+  }
+});
