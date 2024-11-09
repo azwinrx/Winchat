@@ -361,23 +361,15 @@ window.onload = function () {
     app.chat()
   }
 }
+// Mendeteksi perubahan ukuran layar saat keyboard muncul atau hilang
+window.addEventListener('resize', function () {
+  var chatInputContainer = document.getElementById('chat_input_container');
 
-// Fungsi untuk mengatur ulang posisi input chat ketika keyboard muncul
-function adjustChatInputForKeyboard() {
-  const chatInputContainer = document.getElementById('chat_input_container');
-
-  // Dapatkan tinggi viewport visual, jika tersedia
-  const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-  const keyboardHeight = window.innerHeight - viewportHeight;
-
-  if (keyboardHeight > 0) {
-    // Ubah posisi atau margin atas chat input bar
-    chatInputContainer.style.marginBottom = `${keyboardHeight}px`;
+  // Jika tinggi viewport lebih kecil dari tinggi layar, maka keyboard kemungkinan muncul
+  if (window.innerHeight < screen.height) {
+    chatInputContainer.style.bottom = '500px'; // Sesuaikan nilai ini agar berada di atas keyboard
   } else {
-    // Kembalikan ke posisi semula jika keyboard ditutup
-    chatInputContainer.style.marginBottom = '0';
+    chatInputContainer.style.bottom = '0'; // Kembalikan ke posisi bawah jika keyboard hilang
   }
-}
+});
 
-// Mendeteksi perubahan ukuran layar (keyboard muncul atau ditutup)
-window.visualViewport.addEventListener('resize', adjustChatInputForKeyboard);
