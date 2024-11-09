@@ -359,6 +359,11 @@ body {
 
   #chat_container {
     height: 110vh;
+    max-height: calc(110vh - 150px);
+    /* Sesuaikan dengan tinggi input container */
+    overflow-y: auto;
+    margin-bottom: 60px;
+    /* Sesuaikan dengan tinggi input container */
   }
 
   #chat_content_container {
