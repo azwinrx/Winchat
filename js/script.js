@@ -191,7 +191,7 @@ window.onload = function () {
 
       var chat_logout = document.createElement('button')
       chat_logout.setAttribute('id', 'chat_logout')
-      chat_logout.textContent = ` logout`
+      chat_logout.textContent = `${parent.get_name()} • logout`
       // "Logout" is really just deleting the name from the localStorage
       chat_logout.onclick = function () {
         localStorage.clear()
@@ -199,8 +199,8 @@ window.onload = function () {
         parent.home()
       }
 
-      chat_input_container.append(chat_input, chat_input_send)
       chat_logout_container.append(chat_logout)
+      chat_input_container.append(chat_input, chat_input_send)
       chat_inner_container.append(chat_content_container, chat_input_container, chat_logout_container)
       chat_container.append(chat_inner_container)
       document.body.append(chat_container)
@@ -361,3 +361,23 @@ window.onload = function () {
     app.chat()
   }
 }
+
+// Fungsi untuk mengatur ulang posisi input chat ketika keyboard muncul
+function adjustChatInputForKeyboard() {
+  const chatInputContainer = document.getElementById('chat_input_container');
+
+  // Dapatkan tinggi viewport visual, jika tersedia
+  const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  const keyboardHeight = window.innerHeight - viewportHeight;
+
+  if (keyboardHeight > 0) {
+    // Ubah posisi atau margin atas chat input bar
+    chatInputContainer.style.marginBottom = `${keyboardHeight}px`;
+  } else {
+    // Kembalikan ke posisi semula jika keyboard ditutup
+    chatInputContainer.style.marginBottom = '0';
+  }
+}
+
+// Mendeteksi perubahan ukuran layar (keyboard muncul atau ditutup)
+window.visualViewport.addEventListener('resize', adjustChatInputForKeyboard);
