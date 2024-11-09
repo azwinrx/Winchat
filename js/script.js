@@ -379,6 +379,6 @@ window.addEventListener('resize', function () {
     chatContentContainer.style.height = '40%';
   } else {
     // Keyboard is hidden, reset to full height
-    chatContentContainer.style.height = 'calc(100% - ' + chatInputContainer.offsetHeight + 'px)';
+    chatContentContainer.style.height = '0';
   }
 });
