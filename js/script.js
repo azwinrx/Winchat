@@ -367,7 +367,7 @@ window.addEventListener('resize', function () {
 
   // Jika tinggi viewport lebih kecil dari tinggi layar, maka keyboard kemungkinan muncul
   if (window.innerHeight < screen.height) {
-    chatInputContainer.style.bottom = '500px'; // Sesuaikan nilai ini agar berada di atas keyboard
+    chatInputContainer.style.bottom = '50px'; // Sesuaikan nilai ini agar berada di atas keyboard
   } else {
     chatInputContainer.style.bottom = '0'; // Kembalikan ke posisi bawah jika keyboard hilang
   }
