@@ -363,15 +363,13 @@ body {
 
   #chat_content_container {
     width: 100%;
-    height: 65%;
-
+    height: 70%;
     float: left;
     overflow-y: auto;
     font-family: Varela Round;
-
     padding-left: 10px;
     padding-right: 10px;
-    padding-bottom: 10%;
+    margin-bottom: 50px;
   }
 
   #join_button {
@@ -420,8 +418,12 @@ body {
     width: 100%;
     height: 50px;
     border-radius: 50px;
-    background-color: #3B4A62;
-    color: rgb(255, 255, 255);
+    background-color: rgb(255, 204, 2);
+    color: #024F8E;
+    border: 2px solid #1d3354;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Adds shadow */
+
     width: 100%;
     height: 40px;
     /* Adjust height as needed */
