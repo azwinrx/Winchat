@@ -191,7 +191,7 @@ window.onload = function () {
 
       var chat_logout = document.createElement('button')
       chat_logout.setAttribute('id', 'chat_logout')
-      chat_logout.textContent = `${parent.get_name()} • logout`
+      chat_logout.textContent = `logout`
       // "Logout" is really just deleting the name from the localStorage
       chat_logout.onclick = function () {
         localStorage.clear()
@@ -367,7 +367,7 @@ window.addEventListener('resize', function () {
 
   // Jika tinggi viewport lebih kecil dari tinggi layar, maka keyboard kemungkinan muncul
   if (window.innerHeight < screen.height) {
-    chatInputContainer.style.bottom = '50px'; // Sesuaikan nilai ini agar berada di atas keyboard
+    chatInputContainer.style.bottom = '10px'; // Sesuaikan nilai ini agar berada di atas keyboard
   } else {
     chatInputContainer.style.bottom = '0'; // Kembalikan ke posisi bawah jika keyboard hilang
   }
