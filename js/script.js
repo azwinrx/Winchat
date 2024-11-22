@@ -40,7 +40,7 @@ window.onload = function () {
 
       var title = document.createElement('h1')
       title.setAttribute('id', 'title')
-      title.textContent = 'winchat'
+      title.textContent = 'WinChat'
       title_inner_container.append(title)
       title_container.append(title_inner_container)
       document.body.append(title_container)
@@ -220,10 +220,24 @@ window.onload = function () {
     // Sends message/saves the message to firebase database
     send_message(message) {
       var parent = this;
-      // if the local storage name is null and there is no message
-      // then return/don't send the message. The user is somehow hacking
-      // to send messages. Or they just deleted the
-      // localstorage themselves. But hacking sounds cooler!!
+    
+      //list kata kasar
+      const badWords = ["tolol", "goblok", "anjing","babi", "monyet","ngentot","tai"];
+
+      //Algoritma Regular Expression
+      const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
+    
+      if (badWordsRegex.test(message)) {
+        //notifikasi pelanggaran
+        alert("Pesan Anda mengandung kata-kata yang tidak pantas dan akan disensor.");
+    
+        // Men-sensor kata kasar sesuai jumlah huruf
+        message = message.replace(badWordsRegex, function (match) {
+          return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
+        });
+    
+          }
+
       if (parent.get_name() == null && message == null) {
         return;
       }
