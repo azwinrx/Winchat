@@ -220,23 +220,29 @@ window.onload = function () {
     // Sends message/saves the message to firebase database
     send_message(message) {
       var parent = this;
-    
+
       //list kata kasar
-      const badWords = ["tolol", "goblok", "anjing","babi", "monyet","ngentot","tai"];
+      const badWords = [
+        "tolol", "goblok", "anjing", "babi", "monyet", "ngentot", "tai", "sundal", "pelacur", "kontol",
+        "memek", "bodoh", "jancok", "bangsat", "setan", "brengsek", "tai kucing", "perek",
+        "gila", "bajingan", "tahi", "sialan", "bedebah", "kampungan", "pecundang", "pukimak", "kampret",
+        "pecundang", "anjir", "dungu", "dongo", "bego", "ngepet", "sampah", "biadab", "berengsek", "sontoloyo",
+        "otong", "toket", "eek", "gembel", "kampungan", "berak"
+      ];
 
       //Algoritma Regular Expression
       const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
-    
+
       if (badWordsRegex.test(message)) {
         //notifikasi pelanggaran
         alert("Pesan Anda mengandung kata-kata yang tidak pantas dan akan disensor.");
-    
+
         // Men-sensor kata kasar sesuai jumlah huruf
         message = message.replace(badWordsRegex, function (match) {
           return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
         });
-    
-          }
+
+      }
 
       if (parent.get_name() == null && message == null) {
         return;
