@@ -236,9 +236,7 @@ window.onload = function () {
         const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
 
         if (badWordsRegex.test(message)) {
-          // Notifikasi pelanggaran
-          alert("Pesan Anda mengandung kata-kata yang tidak pantas dan akan disensor.");
-
+          
           // Men-sensor kata kasar sesuai jumlah huruf
           message = message.replace(badWordsRegex, function (match) {
             return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
