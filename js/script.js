@@ -218,64 +218,68 @@ window.onload = function () {
 
 
     // Sends message/saves the message to firebase database
-    send_message(message) {
+    async send_message(message) {
       var parent = this;
 
-      //list kata kasar
-      const badWords = [
-        "tolol", "goblok", "anjing", "babi", "monyet", "ngentot", "tai", "sundal", "pelacur", "kontol",
-        "memek", "bodoh", "jancok", "bangsat", "setan", "brengsek", "tai kucing", "perek",
-        "gila", "bajingan", "tahi", "sialan", "bedebah", "kampungan", "pecundang", "pukimak", "kampret",
-        "pecundang", "anjir", "dungu", "dongo", "bego", "ngepet", "sampah", "biadab", "berengsek", "sontoloyo",
-        "otong", "toket", "eek", "gembel", "kampungan", "berak"
-      ];
+      try {
+        // Membaca file badWords.txt dari server menggunakan Fetch API
+        const response = await fetch('badWords.txt');
+        if (!response.ok) {
+          throw new Error('File tidak ditemukan');
+        }
+        const data = await response.text(); // Mengambil data sebagai teks
 
-      //Algoritma Regular Expression
-      const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
+        // Memecah data berdasarkan baris untuk mendapatkan array dari kata-kata kasar
+        const badWords = data.split('\n').map(word => word.trim());
 
-      if (badWordsRegex.test(message)) {
-        //notifikasi pelanggaran
-        alert("Pesan Anda mengandung kata-kata yang tidak pantas dan akan disensor.");
+        // Algoritma Regular Expression
+        const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
 
-        // Men-sensor kata kasar sesuai jumlah huruf
-        message = message.replace(badWordsRegex, function (match) {
-          return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
-        });
+        if (badWordsRegex.test(message)) {
+          // Notifikasi pelanggaran
+          alert("Pesan Anda mengandung kata-kata yang tidak pantas dan akan disensor.");
 
-      }
+          // Men-sensor kata kasar sesuai jumlah huruf
+          message = message.replace(badWordsRegex, function (match) {
+            return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
+          });
+        }
 
-      if (parent.get_name() == null && message == null) {
-        return;
-      }
+        // Memeriksa jika nama atau pesan kosong
+        if (parent.get_name() == null || message == null) {
+          return;
+        }
 
-      // Function to get current time
-      function getCurrentTime() {
-        const now = new Date();
-        const year = now.getFullYear(); // Mendapatkan tahun
-        const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mendapatkan bulan (ditambah 1 karena bulan dimulai dari 0)
-        const date = now.getDate().toString().padStart(2, '0'); // Mendapatkan tanggal
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        return `${date}/${month}/${year} ${hours}:${minutes}`; // Mengembalikan format yang diinginkan
-      }
+        // Function untuk mendapatkan waktu saat ini
+        function getCurrentTime() {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = (now.getMonth() + 1).toString().padStart(2, '0');
+          const date = now.getDate().toString().padStart(2, '0');
+          const hours = now.getHours().toString().padStart(2, '0');
+          const minutes = now.getMinutes().toString().padStart(2, '0');
+          return `${date}/${month}/${year} ${hours}:${minutes}`;
+        }
 
-      // Get the firebase database value
-      db.ref('chats/').once('value', function (message_object) {
-        // This index is mortant. It will help organize the chat in order
+        // Mendapatkan nilai dari firebase database
+        const message_object = await db.ref('chats/').once('value');
         var index = parseFloat(message_object.numChildren()) + 1;
-        db.ref('chats/' + `message_${index}`).set({
+
+        await db.ref('chats/' + `message_${index}`).set({
           name: parent.get_name(),
           message: message,
-          time: getCurrentTime(), // Add current time
+          time: getCurrentTime(),
           index: index
-        })
-          .then(function () {
-            // After we send the chat refresh to get the new messages
-            parent.refresh_chat();
-          })
-      });
-    }
+        });
 
+        // Setelah mengirim pesan, refresh chat
+        parent.refresh_chat();
+
+      } catch (err) {
+        // Menangani error jika terjadi kesalahan
+        alert("Terjadi kesalahan: " + err.message);
+      }
+    }
 
     // Get name. Gets the username from localStorage
     get_name() {
