@@ -1,7 +1,6 @@
-// We enclose this in window.onload.
-// So we don't have ridiculous errors.
+//menampilkan di layar
 window.onload = function () {
-  // Your web app's Firebase configuration
+  // konfigurasi firebase
   var firebaseConfig = {
     apiKey: "AIzaSyDqiHMN82XqatCBw4iKRcK71Z-vqiJRbdg",
     authDomain: "globalchat-6ae1d.firebaseapp.com",
@@ -11,28 +10,27 @@ window.onload = function () {
     messagingSenderId: "495782483996",
     appId: "1:495782483996:web:0eefc524e8e7217506e7d9"
   };
-  // Initialize Firebase
+  // inisialisasi firebase
   firebase.initializeApp(firebaseConfig);
-  // This is very IMPORTANT!! We're going to use "db" a lot.
+  //membuat pernyataan database
   var db = firebase.database()
-  // We're going to use oBjEcT OrIeNtEd PrOgRaMmInG. Lol
+
+  //pakai OOP
   class winchat {
-    // Home() is used to create the home page
+    // home() dipakai untuk homepage
     home() {
-      // First clear the body before adding in
-      // a title and the join form
       document.body.innerHTML = ''
       this.create_title()
       this.create_join_form()
     }
-    // chat() is used to create the chat page
+    // chat() dipakai untuk membuat halaman chat
     chat() {
       this.create_title()
       this.create_chat()
     }
-    // create_title() is used to create the title
+    // create_title() untuk membuat title
     create_title() {
-      // This is the title creator. 🎉
+      // This is the title creator. 
       var title_container = document.createElement('div')
       title_container.setAttribute('id', 'title_container')
       var title_inner_container = document.createElement('div')
@@ -45,9 +43,8 @@ window.onload = function () {
       title_container.append(title_inner_container)
       document.body.append(title_container)
     }
-    // create_join_form() creates the join form
+    // create_join_form() membuat join form
     create_join_form() {
-      // YOU MUST HAVE (PARENT = THIS). OR NOT. I'M NOT YOUR BOSS!😂
       var parent = this;
 
       var join_container = document.createElement('div')
@@ -69,43 +66,35 @@ window.onload = function () {
       join_input.setAttribute('id', 'join_input')
       join_input.setAttribute('maxlength', 25)
       join_input.placeholder = 'Masukkan nama anonim-mu'
-      // Every time we type into the join_input
+
+      //permisalan
       join_input.onkeyup = function () {
-        // If the input we have is longer that 0 letters
         if (join_input.value.length > 0) {
-          // Make the button light up
+          // kalo ada, button bisa coi
           join_button.classList.add('enabled')
-          // Allow the user to click the button
           join_button.onclick = function () {
-            // Save the name to local storage. Passing in
-            // the join_input.value
+            // Save nama yang diinput
             parent.save_name(join_input.value)
-            // Remove the join_container. So the site doesn't look weird.
+            // hapus join_container, biar ga jelek
             join_container.remove()
-            // parent = this. But it is not the join_button
-            // It is (winchat = this).
             parent.create_chat()
           }
         } else {
-          // If the join_input is empty then turn off the
-          // join button
+          // kalo kosong, button ga bisa coi
           join_button.classList.remove('enabled')
         }
       }
 
-      // Append everything to the body
+      //append semuanya
       join_button_container.append(join_button)
       join_input_container.append(join_input)
       join_inner_container.append(join_input_container, join_button_container)
       join_container.append(join_inner_container)
       document.body.append(join_container)
     }
-    // create_load() creates a loading circle that is used in the chat container
+    // bikin loading chat bulet-bulet
     create_load(container_id) {
-      // YOU ALSO MUST HAVE (PARENT = THIS). BUT IT'S WHATEVER THO.
       var parent = this;
-
-      // This is a loading function. Something cool to have.
       var container = document.getElementById(container_id)
       container.innerHTML = ''
 
@@ -119,15 +108,14 @@ window.onload = function () {
       container.append(loader_container)
 
     }
-    // create_chat() creates the chat container and stuff
+    // membuat chat container
     create_chat() {
-      // Again! You need to have (parent = this)
       var parent = this;
-      // GET THAT MEMECHAT HEADER OUTTA HERE
+      //membuat header winchat
       var title_container = document.getElementById('title_container')
       var title = document.getElementById('title')
       title_container.classList.add('chat_title_container')
-      // Make the title smaller by making it 'chat_title'
+
       title.classList.add('chat_title')
 
       var chat_container = document.createElement('div')
@@ -149,9 +137,9 @@ window.onload = function () {
 
       var chat_input = document.createElement('input')
       chat_input.setAttribute('id', 'chat_input')
-      // Only a max message length of 1000
+      // atur batas max chat yang diketik
       chat_input.setAttribute('maxlength', 1000)
-      // Get the name of the user
+      // get nama user yang sedang chat
       chat_input.placeholder = `${parent.get_name()}, Katakan sesuatu...`
       chat_input.onkeyup = function () {
         if (chat_input.value.length > 0) {
@@ -163,20 +151,22 @@ window.onload = function () {
             if (chat_input.value.length <= 0) {
               return
             }
-            // Enable the loading circle in the 'chat_content_container'
+            // aktifin loading circle
             parent.create_load('chat_content_container')
-            // Send the message. Pass in the chat_input.value
+            // buat ngirim pesan
             parent.send_message(chat_input.value)
-            // Clear the chat input box
+            // hapus pesan yang diinput
             chat_input.value = ''
-            // Focus on the input just after
+            // aktifin send button
             chat_input.focus()
           }
         } else {
           chat_input_send.classList.remove('enabled')
         }
       }
+
       // Mendeteksi perubahan ukuran layar (misalnya, saat keyboard muncul atau menghilang)
+      //ini buat mobile coi
       window.addEventListener('resize', function () {
         // Menghitung tinggi keyboard
         var keyboardHeight = window.innerHeight - window.visualViewport.height;
@@ -192,10 +182,11 @@ window.onload = function () {
       var chat_logout = document.createElement('button')
       chat_logout.setAttribute('id', 'chat_logout')
       chat_logout.textContent = `logout`
-      // "Logout" is really just deleting the name from the localStorage
+
+      // hapus nama user kalo logout
       chat_logout.onclick = function () {
         localStorage.clear()
-        // Go back to home page
+        // balikin ke halaman home atau input name
         parent.home()
       }
 
@@ -204,25 +195,24 @@ window.onload = function () {
       chat_inner_container.append(chat_content_container, chat_input_container, chat_logout_container)
       chat_container.append(chat_inner_container)
       document.body.append(chat_container)
-      // After creating the chat. We immediatly create a loading circle in the 'chat_content_container'
+      // aktifin loading circle
       parent.create_load('chat_content_container')
-      // then we "refresh" and get the chat data from Firebase
+      // refresh chat dan dapetin data chat dari firebase
       parent.refresh_chat()
     }
-    // Save name. It literally saves the name to localStorage
+    // nyimpen nama ke local storage
     save_name(name) {
-      // Save name to localStorage
       localStorage.setItem('name', name)
     }
 
 
 
-    // Sends message/saves the message to firebase database
+    // buat ngirim pesan coi
     async send_message(message) {
       var parent = this;
 
       try {
-        // Membaca file badWords.txt dari server menggunakan Fetch API
+        // Membaca file badWords.txt dari file txt
         const response = await fetch('badWords.txt');
         if (!response.ok) {
           throw new Error('File tidak ditemukan');
@@ -233,10 +223,10 @@ window.onload = function () {
         const badWords = data.split('\n').map(word => word.trim());
 
         // Algoritma Regular Expression
-        const badWordsRegex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
+        const badWordsRegex = new RegExp(`(${badWords.join('|')})`, 'gi');
 
         if (badWordsRegex.test(message)) {
-          
+
           // Men-sensor kata kasar sesuai jumlah huruf
           message = message.replace(badWordsRegex, function (match) {
             return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
@@ -279,9 +269,8 @@ window.onload = function () {
       }
     }
 
-    // Get name. Gets the username from localStorage
+    // dapetin nama dari local
     get_name() {
-      // Get the name from localstorage
       if (localStorage.getItem('name') != null) {
         return localStorage.getItem('name')
       } else {
@@ -289,42 +278,35 @@ window.onload = function () {
         return null
       }
     }
-    // Refresh chat gets the message/chat data from firebase
+    // refresh chat buat dapetin update chat
     refresh_chat() {
       var chat_content_container = document.getElementById('chat_content_container')
 
-      // Get the chats from firebase
+      // dapetin dari firebase
       db.ref('chats/').on('value', function (messages_object) {
-        // When we get the data clear chat_content_container
+        // kalo dh dapet data, clear chat content container
         chat_content_container.innerHTML = ''
-        // if there are no messages in the chat. Retrun . Don't load anything
+        // kalo dh tidak ada data, ya gausah load
         if (messages_object.numChildren() == 0) {
           return
         }
 
-        // OK! SO IF YOU'RE A ROOKIE CODER. THIS IS GOING TO BE
-        // SUPER EASY-ISH! I THINK. MAYBE NOT. WE'LL SEE!
-
-        // convert the message object values to an array.
+        // ubah massage object ke array
         var messages = Object.values(messages_object.val());
         var guide = [] // this will be our guide to organizing the messages
-        var unordered = [] // unordered messages
-        var ordered = [] // we're going to order these messages
+        var unordered = []
+        var ordered = []
 
         for (var i, i = 0; i < messages.length; i++) {
-          // The guide is simply an array from 0 to the messages.length
           guide.push(i + 1)
-          // unordered is the [message, index_of_the_message]
           unordered.push([messages[i], messages[i].index]);
         }
 
-        // Now this is straight up from stack overflow 🤣
-        // Sort the unordered messages by the guide
         guide.forEach(function (key) {
           var found = false
           unordered = unordered.filter(function (item) {
             if (!found && item[1] == key) {
-              // Now push the ordered messages to ordered array
+
               ordered.push(item[0])
               found = true
               return false
@@ -334,11 +316,11 @@ window.onload = function () {
           })
         })
 
-        // Now we're done. Simply display the ordered messages
+        // nampilin urutan chat
         ordered.forEach(function (data) {
           var name = data.name
           var message = data.message
-          var time = data.time; // Get the time
+          var time = data.time; // keterangan waktu
 
 
           var message_container = document.createElement('div')
@@ -352,7 +334,7 @@ window.onload = function () {
 
           var message_user = document.createElement('p')
           message_user.setAttribute('class', 'message_user')
-          message_user.textContent = `${name} at ${time}`; // Display name and time
+          message_user.textContent = `${name} at ${time}`; // tampilin nama dan waktu
 
           var message_content_container = document.createElement('div')
           message_content_container.setAttribute('class', 'message_content_container')
@@ -368,17 +350,14 @@ window.onload = function () {
 
           chat_content_container.append(message_container)
         });
-        // Go to the recent message at the bottom of the container
+        // chat baru msk ke bawah
         chat_content_container.scrollTop = chat_content_container.scrollHeight;
       })
 
     }
   }
-  // So we've "built" our app. Let's make it work!!
+
   var app = new winchat()
-  // If we have a name stored in localStorage.
-  // Then use that name. Otherwise , if not.
-  // Go to home.
   if (app.get_name() != null) {
     app.chat()
   }
