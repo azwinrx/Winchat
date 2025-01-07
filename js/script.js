@@ -224,9 +224,10 @@ window.onload = function () {
 
         // Algoritma Regular Expression
         const badWordsRegex = new RegExp(`(${badWords.join('|')})`, 'gi');
+        // g = Menyuruh RegEx untuk mencari semua kecocokan dalam teks, bukan hanya kecocokan pertama.
+        //i =  Menyuruh RegEx untuk memeriksa semua huruf kecil dan besar.
 
         if (badWordsRegex.test(message)) {
-
           // Men-sensor kata kasar sesuai jumlah huruf
           message = message.replace(badWordsRegex, function (match) {
             return '*'.repeat(match.length); // Buat tanda bintang sebanyak panjang kata
